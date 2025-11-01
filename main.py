@@ -6,5 +6,5 @@ app = FastAPI()
 def home():
     return {"message": "Hello, FastAPI is working!"}
 @app.get("/welcome")
-def hello():
+def welcome_message():
     return {"message": "👋 Welcome to your FastAPI server on Render! 🚀"}
