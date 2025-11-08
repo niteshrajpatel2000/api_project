@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, File, UploadFile, HTTPException, Depends
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
-from database import SessionLocal
+from database import SessionLocal, Base, engine
 from models import User
 
 
@@ -30,6 +30,13 @@ app = FastAPI(title="Agri AI + User API", version="1.0")
 
 
 # -------------------- DATABASE CONFIG --------------------
+
+
+# ✅ Auto-create all database tables (like "users") at startup
+@app.on_event("startup")
+def on_startup():
+    Base.metadata.create_all(bind=engine)
+
 def get_db():
     """Dependency to provide a SQLAlchemy session to endpoints"""
     db = SessionLocal()
